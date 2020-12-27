@@ -1,0 +1,24 @@
+
+# For more information, please refer to https://aka.ms/vscode-docker-python
+# FROM python:3.8
+
+#use the base package for from official pytorch source 
+FROM pytorch/pytorch:1.7.0-cuda11.0-cudnn8-devel
+
+ADD requirements.txt .
+RUN python3 -m pip install -r requirements.txt
+
+# Keeps Python from generating .pyc files in the container
+ENV PYTHONDONTWRITEBYTECODE 1
+
+# Turns off buffering for easier container logging
+ENV PYTHONUNBUFFERED 1
+
+#COPY if we dont mount volume (for running on AIP. If run docker on local machine , mounting easier)
+# COPY /src /lid_seal/src
+
+#docker container starts with bash
+RUN mkdir p /yolo
+WORKDIR /yolo
+RUN ["bash"]
+# During debugging, this entry point will be overridden. For more information, refer to https://aka.ms/vscode-docker-python-debug
